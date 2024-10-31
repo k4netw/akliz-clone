@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Akliz Clone{% endblock %}</title>
+    <title>{% block title %}My Site{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    {% include 'header.html' %}
+    <div class="top-header">
+        <div class="logo">
+        <a href="/">
+            <div class="diamond"></div>
+            AKLIZ</a>
+    </div>
+    </div>
 
     <div class="blue-strip">
-        <h1>{% block page_header %}SERVERS{% endblock %}</h1>
+        <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1>
     </div>
 
     <main>
