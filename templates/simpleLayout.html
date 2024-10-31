@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
+    <title>{% block title %}Placeholder{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -20,8 +20,16 @@
         <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1>
     </div>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    <div class="content-layout">
+        <aside class="sidebar">
+            {% block sidebar %}
+            <p>Sidebar content goes here</p>
+            {% endblock %}
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
 </body>
 </html>

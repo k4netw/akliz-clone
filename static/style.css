@@ -7,6 +7,8 @@
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
 }
 
 .top-header {
@@ -78,4 +80,22 @@ html, body {
     font-size: 3em;
     font-family: Arial, sans-serif;
     font-weight: normal;
+}
+
+.content-layout {
+    display: flex;
+    min-height: 80vh
+}
+
+.sidebar {
+    width: 400px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-right: 2px solid #D7D7D7;
+}
+
+.main-content {
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto;
 }
