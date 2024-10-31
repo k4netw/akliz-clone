@@ -1,15 +1,14 @@
 .top-header {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #F2F2F2;
+    background-color: #ECECEC;
     font-family: Arial, sans-serif;
 }
 
 .top-header .logo a {
     font-size: 1.2em;
     text-decoration: none;
-    color: #333;
+    color: #666666;
     margin-right: 50px;
 }
 
@@ -18,6 +17,14 @@
     align-items: center;
     text-decoration: none;
     color: #333;
+    padding: 20px 40px;
+    transition: background-color;
+
+}
+
+.logo a:hover {
+    background-color: #DDDDDD;
+    color: #222222;
 }
 
 .diamond {
@@ -26,7 +33,7 @@
     background-color: red;
     transform: rotate(45deg);
     margin-left: 10px;
-    margin-right: 20px;/
+    margin-right: 20px;
 }
 
 .navigation {
@@ -36,12 +43,15 @@
 
 .navigation a {
     text-decoration: none;
-    color: #333;
+    color: #666666;
     font-size: 1.2em;
+    padding: 20px 40px;
+    transition: background-color;
 }
 
 .navigation a:hover {
-    text-decoration: underline;
+    background-color: #DDDDDD;
+    color: #222222;
 }
 
 .blue-strip {
