@@ -1,6 +1,9 @@
 from flask import Flask, render_template
+from database import init_db, get_db_connection
 
 app = Flask(__name__)
+
+init_db()
 
 @app.route('/')
 def home():
