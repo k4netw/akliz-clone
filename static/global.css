@@ -83,25 +83,14 @@ html, body {
     font-weight: normal;
 }
 
-.content-layout {
-    display: flex;
-    min-height: 80vh
-}
-
 .sidebar {
+    position: absolute;
     width: 400px;
     padding: 30px;
     background-color: #F9F9F9;
     border-right: 2px solid #D7D7D7;
-}
-
-.main-content {
-    width: 100%;
-    padding: 20px;
-    overflow-y: auto;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+    height: calc(100vh - 180px);
+    box-sizing: border-box;
 }
 
 .sidebar a {
@@ -113,6 +102,14 @@ html, body {
     color: #0099FF;
 }
 
+.main-content {
+    margin-left: 400px;
+    padding: 30px;
+    height: calc(100vh - 180px);
+    max-width: calc(100vw - 400px);
+    display: flex;
+    box-sizing: border-box;
+}
 
 input[type="text"],
 input[type="email"],
@@ -144,7 +141,6 @@ button {
     border-radius: 0;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
 
 button:hover {

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Placeholder{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    {% block extra_styles %}{% endblock %}
 </head>
 <body>
     <div class="top-header">
@@ -20,16 +21,12 @@
         <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1>
     </div>
 
-    <div class="content-layout">
-        <aside class="sidebar">
-            {% block sidebar %}
-            <p>Sidebar content goes here</p>
-            {% endblock %}
-        </aside>
+    <aside class="sidebar">
+        {% block sidebar %}{% endblock %}
+    </aside>
 
-        <main class="main-content">
-            {% block content %}{% endblock %}
-        </main>
-    </div>
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>
