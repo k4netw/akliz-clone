@@ -8,22 +8,40 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
 {% endblock %}
 
+{% block sidebar %}
+    <p><a href="/login">Login</a> to an existing account.</p>
+{% endblock %}
+
 {% block content %}
-<div class="register-form">
+<div class="register-container">
     <form action="/register" method="post">
         <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required>
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <label for="confirm-email"></label>
+            <input type="email" id="confirm-email" name="confirm-email" required>
+            <small class="helper-text">Type your email address again.</small>
         </div>
         <div class="form-group">
-            <label for="confirm-password">Confirm password</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <small class="helper-text">Must contain 8 or more letters, numbers, and symbols.</small>
         </div>
-        <button type="submit">Register</button>
+        <div class="form-group">
+            <label for="confirm-password"></label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <small class="helper-text">Type your password again.</small>
+        </div>
+        <button type="submit" class="register-button">Register</button>
     </form>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-.register-form {
+.register-container {
     width: 100%;
 }
 
@@ -23,6 +23,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.helper-text {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #999;
 }
 
 button[type="submit"] {

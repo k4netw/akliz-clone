@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from database import init_db
-from auth_utils import authenticate_user
+from auth_utils import authenticate_user, register_user
 
 app = Flask(__name__)
 app.secret_key = 'placeholder'
@@ -33,8 +33,23 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/register')
+@app.route('/register', methods = ['GET', 'POST'])
 def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        confirm_email = request.form['confirm-email']
+        password = request.form['password']
+        confirm_password = request.form['confirm-password']
+
+        success, message = register_user(email, confirm_email, password, confirm_password)
+        if not success:
+            flash(message, 'error')
+            return render_template('register.html', email=email, confirm_email=confirm_email, password=password, confirm_password=confirm_password)
+
+
+        flash(message, 'success')
+        return redirect(url_for('login'))
+
     return render_template('register.html')
 
 
