@@ -15,7 +15,8 @@ def init_db():
 
             conn.execute('''CREATE TABLE IF NOT EXISTS Servers (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name VARCHAR(100) NOT NULL UNIQUE
+                            name VARCHAR(100) NOT NULL UNIQUE,
+                            memory INTEGER NOT NULL
                         )''')
 
             conn.execute('''CREATE TABLE IF NOT EXISTS UserServers (

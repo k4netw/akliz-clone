@@ -1,0 +1,66 @@
+{% extends "mainLayout.html" %}
+
+{% block title %}Servers{% endblock %}
+
+{% block page_header %}SERVERS{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='servers.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+    <a href="/servers/new">Create a server</a>
+    <br></br>
+    <h3>Your Plan</h3>
+        <div class="plan-details">
+            <div class="plan-item">
+                <strong>Servers</strong>
+                <p>Startable: 0 of 1</p>
+                <p>Total: 0 of 2</p>
+            </div>
+            <br></br>
+            <div class="plan-item">
+                <strong>Memory</strong>
+                <p>Total: 2000MB</p>
+                <p>Used: 0MB</p>
+                <p>Free: 2000MB</p>
+            </div>
+{% endblock %}
+
+{% block content %}
+<div class="server-sections">
+    <div class="server-section">
+        <h2>Started</h2>
+        <div class="server-table">
+            {% if started_servers %}
+                {% for server in started_servers %}
+                <div class="server-row">
+                    <span class="server-name">{{ server.name }}</span>
+                    <span class="server-memory">{{ server.memory }} MB</span>
+                    <a href="{{ url_for('manage_server', server_id=server.id) }}" class="manage-link">Manage</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No servers are started.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="server-section">
+        <h2>Stopped</h2>
+        <div class="server-table">
+            {% if stopped_servers %}
+                {% for server in stopped_servers %}
+                <div class="server-row">
+                    <span class="server-name">{{ server.name }}</span>
+                    <span class="server-memory">{{ server.memory }} MB</span>
+                    <a href="{{ url_for('manage_server', server_id=server.id) }}" class="manage-link">Manage</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No servers are stopped.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -7,13 +7,6 @@ app.secret_key = 'placeholder'
 
 init_db()
 
-@app.route('/')
-def home():
-    if 'user_id' not in session:
-        flash('Please log in to access this page.', 'warning')
-        return redirect(url_for('login'))
-    return render_template('mainLayout.html')
-
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -56,9 +49,14 @@ def register():
 @app.route('/servers')
 def servers():
     if 'user_id' not in session:
-        flash('Please log in to access this page.', 'warning')
         return redirect(url_for('login'))
-    return render_template('mainLayout.html')
+    return render_template('servers.html')
+
+@app.route('/servers/new')
+def servers():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('new-server.html')
 
 
 @app.route('/logout')

@@ -10,10 +10,11 @@
 <body>
     <div class="top-header">
         <div class="logo">
-        <a href="/servers">
-            <div class="diamond"></div>
-            AKLIZ</a>
-    </div>
+            <a href="/servers">
+                <div class="diamond"></div>
+                AKLIZ
+            </a>
+        </div>
         <nav class="navigation">
             <a href="/servers">SERVERS</a>
             <a href="/my-account">MY ACCOUNT</a>
@@ -25,7 +26,11 @@
         <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1>
     </div>
 
-    <main>
+    <aside class="sidebar">
+        {% block sidebar %}{% endblock %}
+    </aside>
+
+    <main class="main-content">
         {% block content %}{% endblock %}
     </main>
 </body>

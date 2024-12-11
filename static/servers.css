@@ -1,0 +1,49 @@
+.server-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.server-section h2 {
+    border-bottom: 2px solid #d7d7d7;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.server-table {
+    border: 1px solid #D7D7D7;
+    background-color: #F9F9F9;
+    padding: 10px;
+}
+
+.server-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.server-row:last-child {
+    border-bottom: none;
+}
+
+.server-name {
+    font-size: 1em;
+    color: #333333;
+}
+
+.server-memory {
+    font-size: 1em;
+    color: #555555;
+}
+
+.manage-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.manage-link:hover {
+    text-decoration: underline;
+}
