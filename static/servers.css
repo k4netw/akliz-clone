@@ -1,49 +1,40 @@
-.server-sections {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* Server Section */
+.servers-section {
+    margin: 20px;
 }
 
-.server-section h2 {
-    border-bottom: 2px solid #d7d7d7;
-    margin-bottom: 10px;
+h2 {
     font-size: 1.5em;
+    margin-bottom: 10px;
 }
 
-.server-table {
-    border: 1px solid #D7D7D7;
-    background-color: #F9F9F9;
-    padding: 10px;
+.server-list {
+    margin-bottom: 20px;
 }
 
-.server-row {
+.server-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10px;
-    border-bottom: 1px solid #E0E0E0;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-.server-row:last-child {
-    border-bottom: none;
-}
-
-.server-name {
+.server-item span {
+    margin-right: 20px;
     font-size: 1em;
-    color: #333333;
 }
 
-.server-memory {
-    font-size: 1em;
-    color: #555555;
-}
-
-.manage-link {
-    color: #007BFF;
+.server-item a.manage-link {
+    color: #007bff;
     text-decoration: none;
-    font-size: 0.9em;
+    font-weight: bold;
 }
 
-.manage-link:hover {
+.server-item a.manage-link:hover {
     text-decoration: underline;
+}
+
+.server-item:nth-child(even) {
+    background-color: #f9f9f9;
 }

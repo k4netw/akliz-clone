@@ -28,39 +28,36 @@
 {% endblock %}
 
 {% block content %}
-<div class="server-sections">
-    <div class="server-section">
-        <h2>Started</h2>
-        <div class="server-table">
-            {% if started_servers %}
-                {% for server in started_servers %}
-                <div class="server-row">
-                    <span class="server-name">{{ server.name }}</span>
-                    <span class="server-memory">{{ server.memory }} MB</span>
-                    <a href="{{ url_for('manage_server', server_id=server.id) }}" class="manage-link">Manage</a>
+<div class="servers-section">
+    <h2>Started</h2>
+    <div class="server-list">
+        {% if started_servers %}
+            {% for server in started_servers %}
+                <div class="server-item">
+                    <span><strong>Name:</strong> {{ server['name'] }}</span>
+                    <span><strong>Address:</strong> localhost:{{ server['port'] }}</span>
+                    <span><strong>Memory:</strong> {{ server['memory'] }} MB</span>
+                    <a href="/servers/{{ server['id'] }}/console" class="manage-link">Manage</a>
                 </div>
-                {% endfor %}
-            {% else %}
-                <p>No servers are started.</p>
-            {% endif %}
-        </div>
+            {% endfor %}
+        {% else %}
+            <p>No servers are started.</p>
+        {% endif %}
     </div>
 
-    <div class="server-section">
-        <h2>Stopped</h2>
-        <div class="server-table">
-            {% if stopped_servers %}
-                {% for server in stopped_servers %}
-                <div class="server-row">
-                    <span class="server-name">{{ server.name }}</span>
-                    <span class="server-memory">{{ server.memory }} MB</span>
-                    <a href="{{ url_for('manage_server', server_id=server.id) }}" class="manage-link">Manage</a>
+    <h2>Stopped</h2>
+    <div class="server-list">
+        {% if stopped_servers %}
+            {% for server in stopped_servers %}
+                <div class="server-item">
+                    <span><strong>Name:</strong> {{ server['name'] }}</span>
+                    <span><strong>Memory:</strong> {{ server['memory'] }} MB</span>
+                    <a href="{{ url_for('manage_server', server_id=server['id']) }}" class="manage-link">Manage</a>
                 </div>
-                {% endfor %}
-            {% else %}
-                <p>No servers are stopped.</p>
-            {% endif %}
-        </div>
+            {% endfor %}
+        {% else %}
+            <p>No servers are stopped.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -107,7 +107,7 @@ html, body {
     padding: 30px;
     height: calc(100vh - 180px);
     max-width: calc(100vw - 400px);
-    display: flex;
+    display: block;
     box-sizing: border-box;
 }
 
