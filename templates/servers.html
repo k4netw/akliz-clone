@@ -9,22 +9,23 @@
 {% endblock %}
 
 {% block sidebar %}
-    <a href="/servers/new">Create a server</a>
-    <br></br>
-    <h3>Your Plan</h3>
-        <div class="plan-details">
-            <div class="plan-item">
-                <strong>Servers</strong>
-                <p>Startable: 0 of 1</p>
-                <p>Total: 0 of 2</p>
-            </div>
-            <br></br>
-            <div class="plan-item">
-                <strong>Memory</strong>
-                <p>Total: 2000MB</p>
-                <p>Used: 0MB</p>
-                <p>Free: 2000MB</p>
-            </div>
+<a href="/servers/new">Create a server</a>
+<br><br>
+<h3>Your Plan</h3>
+<div class="plan-details">
+    <div class="plan-item">
+        <strong>Servers</strong>
+        <p>Startable: {{ started_count }} of 1</p>
+        <p>Total: {{ total_servers }} of 2</p>
+    </div>
+    <br>
+    <div class="plan-item">
+        <strong>Memory</strong>
+        <p>Total: 2000MB</p>
+        <p>Used: {{ used_memory }}MB</p>
+        <p>Free: {{ free_memory }}MB</p>
+    </div>
+</div>
 {% endblock %}
 
 {% block content %}

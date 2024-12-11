@@ -55,27 +55,49 @@ def servers():
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
+    # Get the user's ID and their servers
     user_id = session['user_id']
     user_servers = get_user_servers(user_id)
 
+    # Initialize Docker client
     client = docker.from_env()
+
+    # Initialize variables
     started_servers = []
     stopped_servers = []
+    used_memory = 0
+    total_servers = len(user_servers)
+    started_count = 0
 
+    # Iterate through user servers
     for server in user_servers:
         try:
             container = client.containers.get(server['name'])
             if container.status == 'running':
-                server['port'] = get_container_port(server['name'])
+                server['port'] = get_container_port(server['name'])  # Get the port of the running container
                 started_servers.append(server)
+                used_memory += server['memory']  # Accumulate memory for running servers
             else:
-                server['port'] = "N/A"
+                server['port'] = "N/A"  # Mark as not running
                 stopped_servers.append(server)
         except docker.errors.NotFound:
-            server['port'] = "N/A"
+            server['port'] = "N/A"  # If container is not found
             stopped_servers.append(server)
 
-    return render_template('servers.html', started_servers=started_servers, stopped_servers=stopped_servers)
+    # Calculate memory and counts
+    started_count = len(started_servers)
+    free_memory = 2000 - used_memory  # Assuming 2000MB is the total memory limit
+
+    # Render the servers page with updated information
+    return render_template(
+        'servers.html',
+        started_servers=started_servers,
+        stopped_servers=stopped_servers,
+        started_count=started_count,
+        total_servers=total_servers,
+        used_memory=used_memory,
+        free_memory=free_memory
+    )
 
 
 @app.route('/servers/new', methods=['GET', 'POST'])
