@@ -41,3 +41,9 @@ def authenticate_user(email, password):
     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
         return user['id']
     return None
+
+def get_email_by_user_id(user_id):
+    conn = get_db_connection()
+    result = conn.execute('SELECT email FROM Users WHERE id = ?', (user_id,)).fetchone()
+    conn.close()
+    return result['email'] if result else None

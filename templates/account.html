@@ -1,0 +1,41 @@
+{% extends "mainLayout.html" %}
+
+{% block title %}Account{% endblock %}
+
+{% block page_header %}ACCOUNT{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}">
+{% endblock %}
+
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block content %}
+<div class="account-container">
+    <form action="/account/update" method="POST" class="account-form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <span class="info-text">{{ session['email'] }}</span>
+        </div>
+        <div class="form-group">
+            <label for="timezone">Time Zone</label>
+            <select id="timezone" name="timezone" required>
+                <option value="Europe/London">Europe/London</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <select id="region" name="region" required>
+                <option value="Europe">Europe</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <a href="/account" class="reset-link">Reset your password</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

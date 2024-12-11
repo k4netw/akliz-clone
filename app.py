@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from database import init_db
-from auth_utils import authenticate_user, register_user
+from auth_utils import authenticate_user, register_user, get_email_by_user_id
 
 app = Flask(__name__)
 app.secret_key = 'placeholder'
@@ -17,6 +17,8 @@ def login():
 
         if user_id:
             session['user_id'] = user_id
+            email = get_email_by_user_id(user_id)
+            session['email'] = email
             flash('Login successful!', 'success')
             return redirect(url_for('servers'))  # Replace 'dashboard' with your target route
         else:
