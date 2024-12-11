@@ -52,11 +52,19 @@ def servers():
         return redirect(url_for('login'))
     return render_template('servers.html')
 
+
 @app.route('/servers/new')
-def servers():
+def newServer():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return render_template('new-server.html')
+    return render_template('newServer.html')
+
+
+@app.route('/account')
+def account():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('account.html')
 
 
 @app.route('/logout')

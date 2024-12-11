@@ -1,0 +1,60 @@
+{% extends "mainLayout.html" %}
+
+{% block title %}New Server{% endblock %}
+
+{% block page_header %}NEW SERVER{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='newServer.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+<a href="/servers">Back</a>
+{% endblock %}
+
+{% block content %}
+    <!-- Server Info Section -->
+    <form action="/servers/new" method="POST" class="server-form">
+        <h2>Minecraft</h2>
+        <p>The vanilla Minecraft server from Mojang</p>
+        <p class="important-note">
+            <strong>IMPORTANT</strong><br>
+            NEW SERVERS LAG - Minecraft servers will always lag when they are new. They are either generating chunks as players see them, dealing with lighting updates (especially in 1.14+), or several other things that cause a new server/world to take time to generate.<br><br>
+            Minecraft 1.14+ requires more RAM than previous versions to run without lag. We recommend at least 2GB of RAM for 1.14/1.15 and 3GB of RAM for 1.16 or higher.
+        </p>
+
+        <div class="form-group">
+            <label for="version">Version</label>
+            <select id="version" name="version" required>
+                <option value="1.21.4">1.21.4</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="server-name">Server Name</label>
+            <input type="text" id="server-name" name="server_name" required placeholder="Enter a server name">
+            <span>.domain.com</span>
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <select id="region" name="region" required>
+                <option value="europe">Europe</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="memory">Server Memory</label>
+            <select id="memory" name="memory" required>
+                <option value="500">500 MB</option>
+                <option value="1000">1000 MB</option>
+                <option value="1500">1500 MB</option>
+                <option value="2000">2000 MB</option>
+            </select>
+        </div>
+
+        <div class="eula">
+            <p>By clicking create, you indicate that you agree to the license agreement of the game and the game server software.</p>
+        </div>
+
+        <button type="submit" class="create-button">CREATE</button>
+    </form>
+</div>
+{% endblock %}
