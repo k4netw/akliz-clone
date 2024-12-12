@@ -9,6 +9,14 @@ app.secret_key = 'placeholder'
 
 init_db()
 
+@app.route('/')
+def default():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    else:
+        return redirect(url_for('servers'))
+
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
