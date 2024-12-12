@@ -1,0 +1,36 @@
+{% extends "mainLayout.html" %} <!-- uses main layout template as base -->
+
+{% block title %}Account{% endblock %} <!-- sets the title of the page -->
+
+{% block page_header %}ACCOUNT{% endblock %} <!-- header text for the page -->
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}"> <!-- includes styles specific to the account page -->
+{% endblock %}
+
+{% block content %}
+<div class="account-container"> <!-- wrapper for account-related content -->
+    <form action="/account/update" method="POST" class="account-form"> <!-- form to update account settings -->
+        <div class="form-group">
+            <label for="username">Username</label> <!-- label for the username -->
+            <span class="info-text">{{ session['email'] }}</span> <!-- shows user's email from session -->
+        </div>
+        <div class="form-group">
+            <label for="timezone">Time Zone</label> <!-- label for timezone dropdown -->
+            <select id="timezone" name="timezone" required>
+                <option value="Europe/London">Europe/London</option> <!-- default timezone option -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label> <!-- label for region dropdown -->
+            <select id="region" name="region" required>
+                <option value="Europe">Europe</option> <!-- default region option -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label> <!-- label for password reset link -->
+            <a href="/account" class="reset-link">Reset your password</a> <!-- link to reset the password -->
+        </div>
+    </form>
+</div>
+{% endblock %}

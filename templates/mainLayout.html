@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- sets the character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ensures responsiveness -->
+    <title>{% block title %}Placeholder{% endblock %}</title> <!-- dynamic page title -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}"> <!-- global CSS file -->
+    {% block extra_styles %}{% endblock %} <!-- additional styles for specific pages -->
+</head>
+<body>
+    <div class="top-header"> <!-- header with logo and navigation -->
+        <div class="logo"> <!-- logo section -->
+            <a href="/servers">
+                <div class="diamond"></div> <!-- decorative diamond -->
+                AKLIZ <!-- brand name -->
+            </a>
+        </div>
+        <nav class="navigation"> <!-- navigation links -->
+            <a href="/servers">SERVERS</a> <!-- link to servers page -->
+            <a href="/account">MY ACCOUNT</a> <!-- link to account page -->
+            <a href="/logout">LOGOUT</a> <!-- logout link -->
+        </nav>
+    </div>
+
+    <div class="blue-strip"> <!-- blue header strip -->
+        <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1> <!-- dynamic page header -->
+    </div>
+
+    <aside class="sidebar"> <!-- sidebar for additional content -->
+        {% block sidebar %}{% endblock %}
+    </aside>
+
+    <main class="main-content"> <!-- main content area -->
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

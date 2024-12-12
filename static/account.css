@@ -1,0 +1,45 @@
+.account-container {
+    width: 100%;
+    margin: 0;
+    padding: 20px 20px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+}
+
+.form-row {
+    display: block;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+label {
+    width: 150px;
+    font-size: 1em;
+    color: #333;
+    text-align: right;
+    font-weight: bold;
+}
+
+.info-text {
+    font-size: 1em;
+    color: #555;
+}
+
+select,
+.reset-link {
+    font-size: 1em;
+    padding: 8px;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+}
+
+select {
+    width: 300px;
+}

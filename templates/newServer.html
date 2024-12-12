@@ -1,0 +1,59 @@
+{% extends "mainLayout.html" %} <!-- uses the main layout template -->
+
+{% block title %}New Server{% endblock %} <!-- sets the page title -->
+
+{% block page_header %}NEW SERVER{% endblock %} <!-- sets the page header text -->
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='newServer.css') }}"> <!-- includes specific styles for the new server page -->
+{% endblock %}
+
+{% block sidebar %}
+<a href="/servers">Back</a> <!-- link to go back to the servers page -->
+{% endblock %}
+
+{% block content %}
+    <form action="/servers/new" method="POST" class="server-form"> <!-- form to create a new server -->
+        <h2>Minecraft</h2> <!-- section header -->
+        <p>The vanilla Minecraft server from Mojang</p> <!-- brief description -->
+        <p class="important-note">
+            <strong>IMPORTANT</strong><br> <!-- highlights the important note -->
+            NEW SERVERS LAG - Minecraft servers will always lag when they are new. They are either generating chunks as players see them, dealing with lighting updates (especially in 1.14+), or several other things that cause a new server/world to take time to generate.<br><br>
+            Minecraft 1.14+ requires more RAM than previous versions to run without lag. We recommend at least 2GB of RAM for 1.14/1.15 and 3GB of RAM for 1.16 or higher. <!-- RAM recommendations for newer Minecraft versions -->
+        </p>
+
+        <div class="form-group">
+            <label for="version">Version</label> <!-- label for the version dropdown -->
+            <select id="version" name="version" required>
+                <option value="1.21.4">1.21.4</option> <!-- single version option -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="server-name">Server Name</label> <!-- label for the server name input -->
+            <input type="text" id="server-name" name="server_name" required placeholder="Enter a server name"> <!-- text input for the server name -->
+            <span>.domain.com</span> <!-- domain suffix -->
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label> <!-- label for the region dropdown -->
+            <select id="region" name="region" required>
+                <option value="europe">Europe</option> <!-- single region option -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="memory">Server Memory</label> <!-- label for the memory dropdown -->
+            <select id="memory" name="memory" required>
+                <option value="500">500 MB</option> <!-- 500 MB memory option -->
+                <option value="1000">1000 MB</option> <!-- 1000 MB memory option -->
+                <option value="1500">1500 MB</option> <!-- 1500 MB memory option -->
+                <option value="2000">2000 MB</option> <!-- 2000 MB memory option -->
+            </select>
+        </div>
+
+        <div class="eula">
+            <p>By clicking create, you indicate that you agree to the license agreement of the game and the game server software.</p> <!-- EULA notice -->
+        </div>
+
+        <button type="submit" class="create-button">CREATE</button> <!-- button to create the server -->
+    </form>
+</div>
+{% endblock %}

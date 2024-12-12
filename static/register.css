@@ -1,0 +1,40 @@
+.register-container {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    width: 200px;
+    text-align: right;
+    margin-right: 10px;
+    color: #666666;
+    font-weight: bold;
+}
+
+.form-group input {
+    max-width: 500px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.helper-text {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #999;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 150px;
+    align-self: center;
+    margin-left: 385px;
+}

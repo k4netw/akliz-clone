@@ -1,0 +1,40 @@
+/* Server Section */
+.servers-section {
+    margin: 20px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.server-list {
+    margin-bottom: 20px;
+}
+
+.server-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.server-item span {
+    margin-right: 20px;
+    font-size: 1em;
+}
+
+.server-item a.manage-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.server-item a.manage-link:hover {
+    text-decoration: underline;
+}
+
+.server-item:nth-child(even) {
+    background-color: #f9f9f9;
+}
