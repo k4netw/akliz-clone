@@ -1,80 +1,80 @@
-{% extends "mainLayout.html" %}
+{% extends "mainLayout.html" %} <!-- uses the main layout template -->
 
-{% block title %}Console{% endblock %}
+{% block title %}Console{% endblock %} <!-- sets the page title to "Console" -->
 
-{% block page_header %}CONSOLE{% endblock %}
+{% block page_header %}CONSOLE{% endblock %} <!-- sets the page header text -->
 
 {% block extra_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='serverConsole.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='serverConsole.css') }}"> <!-- links to console-specific styles -->
 {% endblock %}
 
 {% block sidebar %}
-<a href="/servers">Back</a>
+<a href="/servers">Back</a> <!-- link to go back to servers page -->
 {% endblock %}
 
 {% block content %}
-    <div class="server-name">
-        <h1>Server Name: {{ server['name'] }}</h1>
-        <p>Server Address: localhost:{{ server['port'] }}</p>
-        <p>Version: 1.21.4</p>
-        <p>Region: Europe</p>
+    <div class="server-name"> <!-- displays server details -->
+        <h1>Server Name: {{ server['name'] }}</h1> <!-- server name -->
+        <p>Server Address: localhost:{{ server['port'] }}</p> <!-- server address -->
+        <p>Version: 1.21.4</p> <!-- server version -->
+        <p>Region: Europe</p> <!-- server region -->
     </div>
 
-    <div class="controls">
-        <button id="start-button">Start</button>
-        <button id="stop-button">Stop</button>
-        <button id="restart-button">Restart</button>
+    <div class="controls"> <!-- control buttons for the server -->
+        <button id="start-button">Start</button> <!-- starts the server -->
+        <button id="stop-button">Stop</button> <!-- stops the server -->
+        <button id="restart-button">Restart</button> <!-- restarts the server -->
     </div>
 
     <div class="console-output">
-        <pre></pre>
+        <pre></pre> <!-- area for console output -->
     </div>
 
-    <form action="{{ url_for('delete_server', server_id=server['id']) }}" method="POST">
-        <button type="submit" class="delete-button">Delete Server</button>
+    <form action="{{ url_for('delete_server', server_id=server['id']) }}" method="POST"> <!-- form to delete the server -->
+        <button type="submit" class="delete-button">Delete Server</button> <!-- delete button -->
     </form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script> <!-- includes Socket.IO -->
     <script>
-        const socket = io();
+        const socket = io(); // initializes Socket.IO connection
 
-        const consoleOutput = document.querySelector('.console-output pre');
-        const startButton = document.getElementById('start-button');
-        const stopButton = document.getElementById('stop-button');
-        const restartButton = document.getElementById('restart-button');
+        const consoleOutput = document.querySelector('.console-output pre'); // selects console output area
+        const startButton = document.getElementById('start-button'); // start button
+        const stopButton = document.getElementById('stop-button'); // stop button
+        const restartButton = document.getElementById('restart-button'); // restart button
 
-        function jumpToBottom() {
+        function jumpToBottom() { // auto-scrolls to the bottom of console output
             consoleOutput.scrollTop = consoleOutput.scrollHeight;
         }
 
-        socket.on('connect', () => {
-            consoleOutput.textContent += 'Connected to the server console.\n';
-            socket.emit('start_stream', { server_name: "{{ server['name'] }}" });
+        socket.on('connect', () => { // handles socket connection
+            consoleOutput.textContent += 'Connected to the server console.\n'; // shows connection message
+            socket.emit('start_stream', { server_name: "{{ server['name'] }}" }); // starts server log stream
         });
 
-        socket.on('server_log', (data) => {
-            consoleOutput.textContent += `${data.log}\n`;
-            jumpToBottom();
+        socket.on('server_log', (data) => { // listens for server log messages
+            consoleOutput.textContent += `${data.log}\n`; // appends logs to the console
+            jumpToBottom(); // scrolls to the bottom
         });
 
-        socket.on('error', (data) => {
-            consoleOutput.textContent += `[ERROR]: ${data.message}\n`;
-            jumpToBottom();
+        socket.on('error', (data) => { // handles error messages
+            consoleOutput.textContent += `[ERROR]: ${data.message}\n`; // appends error to console
+            jumpToBottom(); // scrolls to the bottom
         });
 
-        startButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'start' });
+        startButton.addEventListener('click', (e) => { // start button event listener
+            e.preventDefault(); // prevents default button action
+            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'start' }); // sends start command
         });
 
-        stopButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'stop' });
+        stopButton.addEventListener('click', (e) => { // stop button event listener
+            e.preventDefault(); // prevents default button action
+            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'stop' }); // sends stop command
         });
 
-        restartButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'restart' });
+        restartButton.addEventListener('click', (e) => { // restart button event listener
+            e.preventDefault(); // prevents default button action
+            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'restart' }); // sends restart command
         });
     </script>
 {% endblock %}

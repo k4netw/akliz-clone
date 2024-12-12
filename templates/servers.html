@@ -1,63 +1,63 @@
-{% extends "mainLayout.html" %}
+{% extends "mainLayout.html" %} <!-- uses the main layout template -->
 
-{% block title %}Servers{% endblock %}
+{% block title %}Servers{% endblock %} <!-- sets the page title to "Servers" -->
 
-{% block page_header %}SERVERS{% endblock %}
+{% block page_header %}SERVERS{% endblock %} <!-- sets the page header text -->
 
 {% block extra_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='servers.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='servers.css') }}"> <!-- links to servers-specific styles -->
 {% endblock %}
 
 {% block sidebar %}
-<a href="/servers/new">Create a server</a>
+<a href="/servers/new">Create a server</a> <!-- link to create a new server -->
 <br><br>
-<h3>Your Plan</h3>
-<div class="plan-details">
+<h3>Your Plan</h3> <!-- section header for plan details -->
+<div class="plan-details"> <!-- container for plan details -->
     <div class="plan-item">
-        <strong>Servers</strong>
-        <p>Startable: {{ started_count }} of 2</p>
-        <p>Total: {{ total_servers }} of 2</p>
+        <strong>Servers</strong> <!-- displays server limits -->
+        <p>Startable: {{ started_count }} of 2</p> <!-- number of servers that can be started -->
+        <p>Total: {{ total_servers }} of 2</p> <!-- total server limit -->
     </div>
     <br>
     <div class="plan-item">
-        <strong>Memory</strong>
-        <p>Total: 2000MB</p>
-        <p>Used: {{ used_memory }}MB</p>
-        <p>Free: {{ free_memory }}MB</p>
+        <strong>Memory</strong> <!-- displays memory usage -->
+        <p>Total: 2000MB</p> <!-- total available memory -->
+        <p>Used: {{ used_memory }}MB</p> <!-- memory currently in use -->
+        <p>Free: {{ free_memory }}MB</p> <!-- memory available -->
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="servers-section">
-    <h2>Started</h2>
-    <div class="server-list">
+<div class="servers-section"> <!-- container for servers -->
+    <h2>Started</h2> <!-- header for started servers section -->
+    <div class="server-list"> <!-- list of started servers -->
         {% if started_servers %}
             {% for server in started_servers %}
-                <div class="server-item">
-                    <span><strong>Name:</strong> {{ server['name'] }}</span>
-                    <span><strong>Address:</strong> localhost:{{ server['port'] }}</span>
-                    <span><strong>Memory:</strong> {{ server['memory'] }} MB</span>
-                    <a href="/servers/{{ server['id'] }}/console" class="manage-link">Manage</a>
+                <div class="server-item"> <!-- details for each started server -->
+                    <span><strong>Name:</strong> {{ server['name'] }}</span> <!-- server name -->
+                    <span><strong>Address:</strong> localhost:{{ server['port'] }}</span> <!-- server address -->
+                    <span><strong>Memory:</strong> {{ server['memory'] }} MB</span> <!-- memory allocated to the server -->
+                    <a href="/servers/{{ server['id'] }}/console" class="manage-link">Manage</a> <!-- link to manage the server -->
                 </div>
             {% endfor %}
         {% else %}
-            <p>No servers are started.</p>
+            <p>No servers are started.</p> <!-- message if no servers are started -->
         {% endif %}
     </div>
 
-    <h2>Stopped</h2>
-    <div class="server-list">
+    <h2>Stopped</h2> <!-- header for stopped servers section -->
+    <div class="server-list"> <!-- list of stopped servers -->
         {% if stopped_servers %}
             {% for server in stopped_servers %}
-                <div class="server-item">
-                    <span><strong>Name:</strong> {{ server['name'] }}</span>
-                    <span><strong>Memory:</strong> {{ server['memory'] }} MB</span>
-                    <a href="{{ url_for('manage_server', server_id=server['id']) }}" class="manage-link">Manage</a>
+                <div class="server-item"> <!-- details for each stopped server -->
+                    <span><strong>Name:</strong> {{ server['name'] }}</span> <!-- server name -->
+                    <span><strong>Memory:</strong> {{ server['memory'] }} MB</span> <!-- memory allocated to the server -->
+                    <a href="{{ url_for('manage_server', server_id=server['id']) }}" class="manage-link">Manage</a> <!-- link to manage the server -->
                 </div>
             {% endfor %}
         {% else %}
-            <p>No servers are stopped.</p>
+            <p>No servers are stopped.</p> <!-- message if no servers are stopped -->
         {% endif %}
     </div>
 </div>

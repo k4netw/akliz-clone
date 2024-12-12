@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Placeholder{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
-    {% block extra_styles %}{% endblock %}
+    <meta charset="UTF-8"> <!-- sets the character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ensures responsiveness -->
+    <title>{% block title %}Placeholder{% endblock %}</title> <!-- dynamic page title -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}"> <!-- global CSS -->
+    {% block extra_styles %}{% endblock %} <!-- additional page-specific styles -->
 </head>
 <body>
-    <div class="top-header">
-        <div class="logo">
-            <a href="/servers">
-                <div class="diamond"></div>
-                AKLIZ
+    <div class="top-header"> <!-- container for the top header -->
+        <div class="logo"> <!-- logo section -->
+            <a href="/servers"> <!-- link to servers page -->
+                <div class="diamond"></div> <!-- decorative diamond -->
+                AKLIZ <!-- site name -->
             </a>
         </div>
     </div>
 
-    <div class="blue-strip">
-        <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1>
+    <div class="blue-strip"> <!-- strip for page header -->
+        <h1>{% block page_header %}PLACEHOLDER{% endblock %}</h1> <!-- dynamic page header text -->
     </div>
 
-    <aside class="sidebar">
-        {% block sidebar %}{% endblock %}
+    <aside class="sidebar"> <!-- container for the sidebar -->
+        {% block sidebar %}{% endblock %} <!-- dynamic sidebar content -->
     </aside>
 
-    <main class="main-content">
-        {% block content %}{% endblock %}
+    <main class="main-content"> <!-- main content section -->
+        {% block content %}{% endblock %} <!-- dynamic page content -->
     </main>
 </body>
 </html>

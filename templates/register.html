@@ -1,47 +1,40 @@
-{% extends "simpleLayout.html" %}
+{% extends "simpleLayout.html" %} <!-- uses the simple layout template -->
 
-{% block title %}Register{% endblock %}
+{% block title %}Register{% endblock %} <!-- sets the page title to "Register" -->
 
-{% block page_header %}REGISTER{% endblock %}
+{% block page_header %}REGISTER{% endblock %} <!-- sets the page header text to "REGISTER" -->
 
 {% block extra_styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}"> <!-- links to register-specific styles -->
 {% endblock %}
 
 {% block sidebar %}
-    <p><a href="/login">Login</a> to an existing account.</p>
+    <p><a href="/login">Login</a> to an existing account.</p> <!-- link to the login page -->
 {% endblock %}
 
 {% block content %}
-<div class="register-container">
-    <form action="/register" method="post">
+<div class="register-container"> <!-- container for the registration form -->
+    <form action="/register" method="post"> <!-- form for user registration -->
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Email Address</label> <!-- label for email input -->
+            <input type="email" id="email" name="email" required> <!-- email input field -->
         </div>
         <div class="form-group">
-            <label for="confirm-email"></label>
-            <input type="email" id="confirm-email" name="confirm-email" required>
-            <small class="helper-text">Type your email address again.</small>
+            <label for="confirm-email"></label> <!-- empty label for accessibility -->
+            <input type="email" id="confirm-email" name="confirm-email" required> <!-- confirmation email input -->
+            <small class="helper-text">Type your email address again.</small> <!-- helper text for confirmation -->
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-            <small class="helper-text">Must contain 8 or more letters, numbers, and symbols.</small>
+            <label for="password">Password</label> <!-- label for password input -->
+            <input type="password" id="password" name="password" required> <!-- password input field -->
+            <small class="helper-text">Must contain 8 or more letters, numbers, and symbols.</small> <!-- password requirements -->
         </div>
         <div class="form-group">
-            <label for="confirm-password"></label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
-            <small class="helper-text">Type your password again.</small>
+            <label for="confirm-password"></label> <!-- empty label for accessibility -->
+            <input type="password" id="confirm-password" name="confirm-password" required> <!-- confirmation password input -->
+            <small class="helper-text">Type your password again.</small> <!-- helper text for confirmation -->
         </div>
-        <button type="submit" class="register-button">Register</button>
+        <button type="submit" class="register-button">Register</button> <!-- submit button for registration -->
     </form>
-    {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
 </div>
 {% endblock %}
