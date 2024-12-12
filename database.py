@@ -16,15 +16,16 @@ def init_db():
             conn.execute('''CREATE TABLE IF NOT EXISTS Servers (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name VARCHAR(100) NOT NULL UNIQUE,
-                            memory INTEGER NOT NULL
+                            memory INTEGER NOT NULL,
+                            rcon_password VARCHAR(255) NOT NULL
                         )''')
 
             conn.execute('''CREATE TABLE IF NOT EXISTS UserServers (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
                             userID INTEGER,
                             serverID INTEGER,
                             FOREIGN KEY (userID) REFERENCES Users(id),
-                            FOREIGN KEY (serverID) REFERENCES Servers(id),
-                            PRIMARY KEY (userID, serverID)
+                            FOREIGN KEY (serverID) REFERENCES Servers(id)
                         )''')
         conn.close()
         print("Database and tables initialized.")

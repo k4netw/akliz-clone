@@ -1,0 +1,80 @@
+{% extends "mainLayout.html" %}
+
+{% block title %}Console{% endblock %}
+
+{% block page_header %}CONSOLE{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='serverConsole.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+<a href="/servers">Back</a>
+{% endblock %}
+
+{% block content %}
+    <div class="server-name">
+        <h1>Server Name: {{ server['name'] }}</h1>
+        <p>Server Address: localhost:{{ server['port'] }}</p>
+        <p>Version: 1.21.4</p>
+        <p>Region: Europe</p>
+    </div>
+
+    <div class="controls">
+        <button id="start-button">Start</button>
+        <button id="stop-button">Stop</button>
+        <button id="restart-button">Restart</button>
+    </div>
+
+    <div class="console-output">
+        <pre></pre>
+    </div>
+
+    <form action="{{ url_for('delete_server', server_id=server['id']) }}" method="POST">
+        <button type="submit" class="delete-button">Delete Server</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        const consoleOutput = document.querySelector('.console-output pre');
+        const startButton = document.getElementById('start-button');
+        const stopButton = document.getElementById('stop-button');
+        const restartButton = document.getElementById('restart-button');
+
+        function jumpToBottom() {
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        socket.on('connect', () => {
+            consoleOutput.textContent += 'Connected to the server console.\n';
+            socket.emit('start_stream', { server_name: "{{ server['name'] }}" });
+        });
+
+        socket.on('server_log', (data) => {
+            consoleOutput.textContent += `${data.log}\n`;
+            jumpToBottom();
+        });
+
+        socket.on('error', (data) => {
+            consoleOutput.textContent += `[ERROR]: ${data.message}\n`;
+            jumpToBottom();
+        });
+
+        startButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'start' });
+        });
+
+        stopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'stop' });
+        });
+
+        restartButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            socket.emit('control_server', { server_name: "{{ server['name'] }}", action: 'restart' });
+        });
+    </script>
+{% endblock %}

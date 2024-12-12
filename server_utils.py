@@ -1,8 +1,20 @@
 import sqlite3
+import string
 import docker
 from auth_utils import get_db_connection
+from flask_socketio import emit
+import random
 
 DATABASE_PATH = 'aklizDB.sqlite'
+
+client = docker.from_env()
+
+rcon_connections = {}
+
+def generate_rcon_password(length=16):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
+
 
 def add_server_to_db(server_name, memory, user_id):
     conn = get_db_connection()
@@ -11,7 +23,12 @@ def add_server_to_db(server_name, memory, user_id):
         if existing_server:
             return False, "Server name already exists."
 
-        conn.execute('INSERT INTO Servers (name, memory) VALUES (?, ?)', (server_name, memory))
+        rcon_password = generate_rcon_password()
+
+        conn.execute(
+            'INSERT INTO Servers (name, memory, rcon_password) VALUES (?, ?, ?)',
+            (server_name, memory, rcon_password)
+        )
         server_id = conn.execute('SELECT id FROM Servers WHERE name = ?', (server_name,)).fetchone()['id']
 
         conn.execute('INSERT INTO UserServers (userID, serverID) VALUES (?, ?)', (user_id, server_id))
@@ -56,22 +73,100 @@ def get_user_servers(user_id):
     finally:
         conn.close()
 
-import docker
-
-def get_container_port(container_name):
+def get_container_port(server_name):
     try:
-        client = docker.from_env()
-        container = client.containers.get(container_name)
-        if container.status == "running":
-            ports = container.attrs['NetworkSettings']['Ports']
-            if '25565/tcp' in ports and ports['25565/tcp']:
-                return ports['25565/tcp'][0]['HostPort']
-            else:
-                return "Unknown"
+        container = client.containers.get(server_name)
+        ports = container.attrs['NetworkSettings']['Ports']
+        if ports and '25565/tcp' in ports and ports['25565/tcp']:
+            return ports['25565/tcp'][0]['HostPort']
         else:
-            return "N/A"
+            return "Unknown"
     except docker.errors.NotFound:
-        return "N/A"
+        return "Not Found"
     except Exception as e:
-        print(f"Error fetching port for container {container_name}: {e}")
-        return "Unknown"
+        return f"Error: {str(e)}"
+
+def get_server_details(server_id):
+    conn = get_db_connection()
+    try:
+        query = '''
+            SELECT Servers.id, Servers.name, Servers.memory
+            FROM Servers
+            WHERE Servers.id = ?
+        '''
+        server = conn.execute(query, (server_id,)).fetchone()
+        if not server:
+            raise ValueError(f"Server with ID {server_id} not found.")
+
+        server = dict(server)
+        server['port'] = get_container_port(server['name'])
+        server['version'] = "1.21.4"
+        server['region'] = "Europe"
+        return server
+    finally:
+        conn.close()
+
+def stream_logs(server_name):
+    try:
+        container = client.containers.get(server_name)
+        for line in container.logs(stream=True, tail=10):
+            emit('server_log', {'log': line.decode('utf-8').strip()})
+    except Exception as e:
+        emit('server_log', {'log': f'[ERROR]: {str(e)}'})
+
+def start_container(server_name):
+    client = docker.from_env()
+    try:
+        container = client.containers.get(server_name)
+        container.start()
+        return True
+    except docker.errors.NotFound:
+        return False
+
+def stop_container(server_name):
+    client = docker.from_env()
+    try:
+        container = client.containers.get(server_name)
+        container.stop()
+        return True
+    except docker.errors.NotFound:
+        return False
+
+def restart_container(server_name):
+    client = docker.from_env()
+    try:
+        container = client.containers.get(server_name)
+        container.restart()
+        return True
+    except docker.errors.NotFound:
+        return False
+
+
+def remove_docker_container(container_name):
+    client = docker.from_env()
+    try:
+        container = client.containers.get(container_name)
+        container.stop()
+        container.remove()
+        print(f"Successfully removed container: {container_name}")
+    except docker.errors.NotFound:
+        print(f"Container {container_name} not found!")
+    except Exception as e:
+        print(f"Error while removing container {container_name}: {str(e)}")
+
+
+def remove_server_from_db(server_id):
+    conn = sqlite3.connect('aklizDB.sqlite')
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("DELETE FROM UserServers WHERE serverID=?", (server_id,))
+
+        cursor.execute("DELETE FROM Servers WHERE id=?", (server_id,))
+
+        conn.commit()
+        print(f"Server with ID {server_id} deleted from both UserServers and Servers.")
+    except sqlite3.Error as e:
+        print(f"Error while deleting server from DB: {e}")
+    finally:
+        conn.close()
